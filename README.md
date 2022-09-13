@@ -1,12 +1,14 @@
 # Scene Dressing Tools
-A collection of *Editor Tools* making it easier to perform common scene dressing tasks.
+ A collection of *Editor Tools* making it easier to perform common scene dressing tasks.
 
-**Installation:**
-Clone the repo and use "Add package from disk..." from the *Package Manager*.
-Or use "Add package from git URL..." and paste the url https://github.com/FredMoreau/SceneDressingTools.git
+### Install through the Package Manager
+1. Go to Window/Package Manager.
+2. Click on the + icon and select "Add package from git URL...".
+2. Copy/paste the following url in the field and click on Add. (This requires Git installed)
+- git@github.com:FredMoreau/SceneDressingTools.git
+- You can also download the repo as a Zip file, unzip it somewhere like C://Unity_Custom_Packages/, then from the Package Manager select Add package from disk, and browse for the package.json file.
 
 ## Features
-
 ### Material SceneView Drag and Drop
 Hold **Control (Command)** while dragging a *Material* from the *Project Browser* onto a *MeshRenderer* in the *SceneView*. This will bring a menu with **more *Material* assignment options**.
 
@@ -37,3 +39,13 @@ Creates and assigns a *Variant* of the *Material* so that you can edit it while 
 #### Assign and Apply to Prefab
 Sub Menu showing the *Nested Prefab* hierarchy.
 Assigns the *Material* and apply the changes to the selected *Prefab*. This is useful to automatically propagate *Material* changes to all other *Prefab* instances.
+
+# Known Limitations
+- 
+
+# Future Improvements
+- 
+
+
+
+
