@@ -233,6 +233,8 @@ namespace Unity.SceneDressingTools.Editor
 
         static void CopyMaterialOver(MeshRenderer meshRenderer, int index, Material material)
         {
+            Undo.RecordObject(meshRenderer.sharedMaterials[index], "Copy Material Properties");
+
             meshRenderer.sharedMaterials[index].CopyPropertiesFromMaterial(material);
             // HACK : updating the thumbnail
             var tmpCol = meshRenderer.sharedMaterials[index].color;
@@ -338,6 +340,7 @@ namespace Unity.SceneDressingTools.Editor
                 meshRenderer.sharedMaterials = materials;
             }
 
+            // TODO : add Undo recording of Prefab asset
             if (PrefabUtility.IsPartOfPrefabInstance(meshRenderer))
             {
                 PrefabUtility.RecordPrefabInstancePropertyModifications(meshRenderer);
