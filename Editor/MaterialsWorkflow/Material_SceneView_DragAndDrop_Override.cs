@@ -130,11 +130,13 @@ namespace Unity.SceneDressingTools.Editor
                         ReplaceMaterial(renderer, submeshIndex, duplicate);
                     }
 
+#if UNITY_2022_1_OR_NEWER
                     void AssignMaterialVariant()
                     {
                         var duplicate = CreateMaterialVariant(sourceMaterial);
                         ReplaceMaterial(renderer, submeshIndex, duplicate);
                     }
+#endif
 
                     void AddPrefabsMenuItems(GenericMenu menu, string path = "")
                     {
@@ -182,9 +184,11 @@ namespace Unity.SceneDressingTools.Editor
                             AssignMaterialDuplicate();
                         });
 
+#if UNITY_2022_1_OR_NEWER
                         menu.AddItem(new GUIContent(string.Format("Assign a Variant of {0}", sourceMaterial.name), ""), false, () => {
                             AssignMaterialVariant();
                         });
+#endif
 
                         if (PrefabUtility.IsPartOfPrefabThatCanBeAppliedTo(renderer))
                         {
@@ -261,6 +265,7 @@ namespace Unity.SceneDressingTools.Editor
             return AssetDatabase.LoadAssetAtPath<Material>(destinationPath);
         }
 
+#if UNITY_2022_1_OR_NEWER
         static Material CreateMaterialVariant(Material original, string path = "", string name = "")
         {
             var mat = DuplicateMaterial(original, path, name);
@@ -269,6 +274,7 @@ namespace Unity.SceneDressingTools.Editor
 
             return mat;
         }
+#endif
 
         static Dictionary<string, string> GetPrefabsHierarchy(UnityEngine.Object obj)
         {
