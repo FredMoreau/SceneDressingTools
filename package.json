@@ -1,7 +1,7 @@
 {
   "name": "com.unity.scene-dressing-tools",
   "displayName": "Scene Dressing Tools",
-  "version": "0.0.1-preview.1",
+  "version": "0.0.1-preview.2",
   "unity": "2019.3",
   "description": "A collection of Editor Tools making it easier to perform common scene dressing tasks.",
   "author": {
