@@ -10,51 +10,80 @@
 
 ## Features
 ### Material SceneView Drag and Drop
-Hold **Control (Command)** while dragging a *Material* from the *Project Browser* onto a *MeshRenderer* in the *SceneView*. This will bring a menu with **more *Material* assignment options**.
+In the **Preferences** go to the *Scene Dressing/Materials* and enable *Drag 'n' Drop Behaviour Override*. Then set the different modes.
 
-#### Assign Material
+#### Assignment Mode
+
+##### Assign Original
+This is the default behaviour and simply assigns the dropped *Material*.
+
+##### Assign Duplicate
+This assigns a duplicate of the dropped *Material* for later editing. This is useful if you want to edit the *Material* right after.
+**Note**: if the material is a *Material Variant*, the result will inherit from the original *Material*'s *Parent*.
+
+##### Assign Variant (Unity 2022.1 and above)
+Same as Duplicate, but creates a *Material Variant* instead.
+
+##### Copy Properties
+This doesn't assign a *Material*, but copies the dropped *Material*'s properties onto the target Material instead. This is useful when you want to copy materials from a Library onto an imported object with material placeholders.
+**Note**: if the material you copy properties from is a *Material Variant*, the result will not inherit from the original *Material*'s *Parent*.
+
+![preview](/Documentation~/images/copy_properties_over_target.gif)
+
+#### GameObject Mode
+Sets the behaviour when dropping a *Material* onto a *GameObject* (not a *Prefab* instance).
+
+##### Assign
 This has the same effect as dropping a material on an object.
 
-#### Propagate to *Mesh* instances
+##### Popup Menu
+Brings a *Context Menu* to choose each time.
+
+##### Assign to all *Mesh* instances
 Assigns the material to all *MeshRenderer* using the same mesh instance. This is useful to ensure all instances of a *Mesh* are using the same *Material*.
 
 ![preview](/Documentation~/images/propagate_to_mesh_instances.gif)
 
-#### Propagate to meshes using *Material*
+##### Replace in all open Scenes
 Assigns the material to all *MeshRenderer* using the same *Material*.
 This is useful to replace a *Material* throughout the scene.
 
 ![preview](/Documentation~/images/propagate_to_materials.gif)
 
-#### Propagate to *Mesh* instances using *Material*
+##### Replace on all *Mesh* instances
 Assigns the material to all *MeshRenderer* using the same mesh instance and *Material*. This is useful to ensure all instances of a *Mesh* already using a specific *Material* are updated.
 
 ![preview](/Documentation~/images/propagate_instances_materials.gif)
 
-#### Copy *Material* properties over *Material*
-Copies the material properties from source over to target. This is useful when you want to copy materials from a Library onto an imported object with material placeholders.
-**Note**: if the material you copy properties from is a *Material Variant*, the result will not inherit from the original *Material*'s *Parent*.
+##### Replace within Scene Root
+Assigns the material to all *MeshRenderer* using the target *Material*, within children of the same top level GameObject. This is useful to replace a *Material* on all objects of one model.
 
-![preview](/Documentation~/images/copy_properties_over_target.gif)
+#### Prefab Instance Mode
+Sets the behaviour when dropping a *Material* onto a *Prefab* instance.
 
-#### Assign a copy of *Material*
-Creates a copy of the *Material* and assign the copy so that you can edit it freely without touching the original. This is useful if you want to edit the *Material* right after.
-**Note**: if the material is a *Material Variant*, the result will inherit from the original *Material*'s *Parent*.
+##### Assign
+This has the same effect as dropping a material on an object. The *Material* is assigned as an override at scene level.
 
-#### Assign a Variant of *Material*
-Creates and assigns a *Variant* of the *Material* so that you can edit it while inheriting from the original. This is useful if you want to edit the *Material* right after.
-
-#### Assign and Apply to Prefab
-Sub Menu showing the *Nested Prefab* hierarchy.
+##### Popup Menu
+Brings a *Context Menu* showing the *Nested Prefab* hierarchy.
 Assigns the *Material* and apply the changes to the selected *Prefab*. This is useful to automatically propagate *Material* changes to all other *Prefab* instances.
 
 ![preview](/Documentation~/images/assign_and_apply_overrides.gif)
 
+##### Assign to Most Inner Prefab
+The *Material* is assigned and the override is applied to the *leaf* (most inner) *Prefab*.
+
+#### Other Options
+
+##### Auto Apply Overrides
+Automatically apply Overrides to Leaf Prefabs when the assignment is the result of a *replacement*.
+
 # Known Limitations
-- 
+- The Overlay doesn't refresh properly when docked in a Toolbar.
+- When working on a Prefab in Stage mode (Isolation), material assignments are set as overrides at Scene level.
 
 # Future Improvements
-- 
+- Customization of Key Modifiers (Ctrl, Alt, Shift) in the Preferemces
 
 
 
