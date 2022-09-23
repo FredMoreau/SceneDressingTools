@@ -37,7 +37,7 @@ namespace Unity.SceneDressingTools.Editor
             }
 
             if (path == string.Empty)
-                path = "Assets/_Materials";
+                path = "Assets/SceneDressing/Materials";
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
             if (name == string.Empty)
@@ -53,7 +53,7 @@ namespace Unity.SceneDressingTools.Editor
         internal static Material ExtractMaterial(this Material original, string path = "", string name = "")
         {
             if (path == string.Empty)
-                path = "Assets/_Materials";
+                path = "Assets/SceneDressing/Materials";
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
             if (name == string.Empty)

@@ -39,7 +39,7 @@ namespace Unity.SceneDressingTools.Editor
         internal static Mesh ExtractMesh(this Mesh original, string path = "", string name = "")
         {
             if (path == string.Empty)
-                path = "Assets/_Meshes";
+                path = "Assets/SceneDressing/Meshes";
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
             if (name == string.Empty)

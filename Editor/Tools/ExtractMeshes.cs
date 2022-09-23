@@ -15,11 +15,16 @@ namespace Unity.SceneDressingTools.Editor
 
             var meshFilters = Selection.activeGameObject.GetComponentsInChildren<MeshFilter>();
 
+            var n = Selection.activeGameObject.transform.root.name;
+            var path = Preferences.AssetExtractionPath.Replace("[modelName]", n);
+            path = path.Replace("[assetType]", "Meshes");
+            path = "Assets/" + path;
+
             foreach (var mFilter in meshFilters)
             {
                 if (!meshes.ContainsKey(mFilter.sharedMesh))
                 {
-                    meshes.Add(mFilter.sharedMesh, mFilter.sharedMesh.ExtractMesh());
+                    meshes.Add(mFilter.sharedMesh, mFilter.sharedMesh.ExtractMesh(path, mFilter.name));
                 }
             }
 

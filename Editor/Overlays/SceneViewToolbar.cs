@@ -29,7 +29,7 @@ namespace Unity.SceneDressingTools.Editor
             Preferences.OnSettingsChanged += UpdateToolbar;
             layoutChanged += SceneViewToolbar_layoutChanged;
             floatingChanged += SceneViewToolbar_floatingChanged;
-            SceneViewPrompt.OnToggle += SceneViewPrompt_OnToggle;
+            //SceneViewPrompt.OnToggle += SceneViewPrompt_OnToggle;
             displayedChanged += SceneViewToolbar_displayedChanged;
         }
 
@@ -38,10 +38,10 @@ namespace Unity.SceneDressingTools.Editor
             isDisplayed = state;
         }
 
-        private void SceneViewPrompt_OnToggle()
-        {
-            displayed ^= true;
-        }
+        //private void SceneViewPrompt_OnToggle()
+        //{
+        //    displayed ^= true;
+        //}
 
         private void SceneViewToolbar_floatingChanged(bool isFloating)
         {

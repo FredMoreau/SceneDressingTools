@@ -96,9 +96,6 @@ Right click on a *GameObject* or *Prefab* to extract its *Materials* and *Meshes
 
 # Future Improvements
 - Customization of Key Modifiers (Ctrl, Alt, Shift) in the Preferemces
-
-
-
-
-
+- (Re)building *Prefabs* from Instances
+- Enabling preview when hovering a model with a *Material*.
 

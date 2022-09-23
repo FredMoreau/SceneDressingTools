@@ -17,13 +17,18 @@ namespace Unity.SceneDressingTools.Editor
 
             var renderers = Selection.activeGameObject.GetComponentsInChildren<MeshRenderer>();
 
+            var n = Selection.activeGameObject.transform.root.name;
+            var path = Preferences.AssetExtractionPath.Replace("[modelName]", n);
+            path = path.Replace("[assetType]", "Materials");
+            path = "Assets/" + path;
+
             foreach (var renderer in renderers)
             {
                 foreach (var material in renderer.sharedMaterials)
                 {
                     if (!materials.ContainsKey(material))
                     {
-                        materials.Add(material, material.ExtractMaterial());
+                        materials.Add(material, material.ExtractMaterial(path));
                     }
                 }
             }

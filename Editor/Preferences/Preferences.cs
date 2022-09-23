@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using static Unity.SceneDressingTools.Editor.SceneViewDragAndDropOverride;
+using System.IO;
 
 namespace Unity.SceneDressingTools.Editor
 {
@@ -83,6 +84,20 @@ namespace Unity.SceneDressingTools.Editor
             }
         }
 
+        internal static string AssetExtractionPath
+        {
+            get => EditorPrefs.GetString("SceneDressingTools/AssetExtractionPath", "SceneDressing/[modelName]/[assetType]");
+            set
+            {
+                if (EditorPrefs.GetString("SceneDressingTools/AssetExtractionPath", "SceneDressing/[modelName]/[assetType]") == value)
+                    return;
+                EditorPrefs.SetString("SceneDressingTools/AssetExtractionPath", value);
+                OnSettingsChanged?.Invoke();
+            }
+        }
+
+        static readonly GUIContent AssetExtractionPathGuiContent = new GUIContent("Asset Extraction Path", "[modelName] = name of the gameObject\n[assetType] = \"Materials\" or \"Meshes\"");
+
         [SettingsProvider]
         internal static SettingsProvider CreateSettingsProvider()
         {
@@ -104,12 +119,24 @@ namespace Unity.SceneDressingTools.Editor
 
                     //UseKeyboardModifiers = EditorGUILayout.Toggle("Use Keyboard Modifiers", UseKeyboardModifiers);
                     AutoApplyOverrides = EditorGUILayout.Toggle("Auto Apply Overrides", AutoApplyOverrides);
+
+                    GUI.enabled = true;
+                    AssetExtractionPath = EditorGUILayout.TextField(AssetExtractionPathGuiContent, AssetExtractionPath);
+                    EditorGUILayout.LabelField("Preview: " + ParsePath(AssetExtractionPath));
                 },
 
                 keywords = new HashSet<string>(new[] { "Scene Dressing", "Material" })
             };
 
             return settingsProvider;
+        }
+
+        static string ParsePath(string path)
+        {
+            path = path.Replace("[modelName]", "myGameObject");
+            path = path.Replace("[assetType]", "Materials");
+            path = "Assets/" + path;
+            return path;
         }
     }
 }

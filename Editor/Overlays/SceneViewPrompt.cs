@@ -11,13 +11,22 @@ namespace Unity.SceneDressingTools.Editor
     [Overlay(typeof(SceneView), "Scene Dressing Prompt")]
     public class SceneViewPrompt : Overlay, ITransientOverlay
     {
-        public static event System.Action OnToggle;
+        //public static event System.Action OnToggle;
 
-        public bool visible => Selection.GetFiltered<Material>(SelectionMode.Assets).Length > 0;
+        //public bool visible => Selection.GetFiltered<Material>(SelectionMode.Assets).Length > 0;
+        public bool visible => Preferences.EnableDragAndDropOverride;
+
+        readonly Color bg = new Color(0, 0, 0, 0.4f);
 
         public override void OnCreated()
         {
             base.OnCreated();
+            //var root = containerWindow.rootVisualElement;
+            //var parent = root.parent;
+            //var e = parent.Q<VisualElement>("Scene Dressing Prompt");
+            //root.Q<VisualElement>("unity-overlay").style.backgroundColor = bg;
+
+            //root.style.backgroundColor = Color.clear;
         }
 
         public override void OnWillBeDestroyed()
@@ -27,32 +36,37 @@ namespace Unity.SceneDressingTools.Editor
 
         public override VisualElement CreatePanelContent()
         {
-            var root = new VisualElement();
+            var root = new VisualElement()
+            {
+                
+            };
 
-            string prompt = Preferences.UseKeyboardModifiers ?
-                "Use popup menu to Automatically Apply overrides to Prefabs.\n" +
-                        "Hold <b>Control</b> to replace material in the whole scene.\n" +
-                        "Hold <b>Alt</b> to propagate material assignments to all objects using the same Mesh.\n" +
-                        "Hold <b>Alt + Control</b> to propagate to objects using the same Mesh and same Material.\n" +
-                        //"Hold <b>Shift</b> to Automatically Apply overrides to Leaf Prefabs.\n" +
-                        "Hold <b>Shift only</b> to copy/paste material properties.\n" :
-                        "Hold <b>Ctrl (Cmd)</b> for more options when assigning a <i>Material</i> in <i>Scene View</i>.";
+            // TODO : custom background color 
 
-            var label = new Label("Scene Dressing allows overriding the material assignement Drag and Drop behaviour.")
+            //root.style.backgroundColor = Color.clear;
+
+            string prompt = "<b>Scene Dressing Override is On</b>.\n" +
+                        "Hold <b>Control</b> to Assign Original to instances.\n" +
+                        "Hold <b>Alt</b> to Replace all with Original.\n" +
+                        "Hold <b>Shift</b> to Copy Properties\n" +
+                        "Hold <b>Alt + Control</b> to Replace with Orignal on all Instances.\n" +
+                        "Read documentation for more shortcuts.";
+
+            var label = new Label(prompt)
             {
 
             };
             root.Add(label);
 
-            var button = new Button(() =>
-            {
-                OnToggle?.Invoke();
-                root.Q<Button>().text = SceneViewToolbar.isDisplayed ? "Close" : "Open";
-            })
-            {
-                text = SceneViewToolbar.isDisplayed ? "Close" : "Open"
-            };
-            root.Add(button);
+            //var button = new Button(() =>
+            //{
+            //    OnToggle?.Invoke();
+            //    root.Q<Button>().text = SceneViewToolbar.isDisplayed ? "Close" : "Open";
+            //})
+            //{
+            //    text = SceneViewToolbar.isDisplayed ? "Close" : "Open"
+            //};
+            //root.Add(button);
 
             return root;
         }
