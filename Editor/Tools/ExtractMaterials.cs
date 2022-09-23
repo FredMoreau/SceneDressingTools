@@ -30,7 +30,7 @@ namespace Unity.SceneDressingTools.Editor
 
             foreach (var kvp in materials)
             {
-                MaterialUtilities.ReplaceMaterialInAllMeshRenderers(kvp.Key, kvp.Value);
+                MaterialUtilities.ReplaceMaterialInSelection(kvp.Key, kvp.Value);
             }
         }
 

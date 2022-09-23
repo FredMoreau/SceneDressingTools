@@ -66,7 +66,8 @@ namespace Unity.SceneDressingTools.Editor
             }
         }
 
-        internal static void ReplaceMaterialInAllMeshRenderers(Material targetMaterial, Material sourceMaterial)
+        // TODO : this should be using GetSameMaterialRenderers() ??
+        internal static void ReplaceMaterialInSelection(Material targetMaterial, Material sourceMaterial)
         {
             if (targetMaterial.GetSameMaterialRenderersWithinSelection(out MeshRenderer[] meshRenderers))
             {

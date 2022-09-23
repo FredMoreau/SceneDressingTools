@@ -64,5 +64,16 @@ namespace Unity.SceneDressingTools.Editor
                 }
             }
         }
+
+        internal static void ApplyMeshOverrides(MeshFilter meshFilter, string path)
+        {
+            SerializedObject serializedObject = new SerializedObject(meshFilter);
+            SerializedProperty serializedProperty = serializedObject.FindProperty("m_Mesh");
+
+            if (serializedProperty != null)
+            {
+                PrefabUtility.ApplyPropertyOverride(serializedProperty, path, InteractionMode.AutomatedAction);
+            }
+        }
     }
 }

@@ -3,9 +3,9 @@ All notable changes to this package will be documented in this file.
 
 ## [0.1.0-preview.2] - 2022-09-23
 
-### Extract Materials from Model/Prefab.
+### Extract Materials & Meshes from Model/Prefab.
 
-*Right click on a GameObject in the Hierarchy or a Prefab in the Project View and select Scene Dressing/Extract Materials.*
+*Right click on a GameObject in the Hierarchy or a Prefab in the Project View and select Scene Dressing/Extract Materials/Meshes.*
 
 ### Ping Materials and Meshes.
 

@@ -87,12 +87,16 @@ Ctrl + Right Click on a *GameObject* in *Scene View* to "ping" its *Material*.
 ##### Mesh Pinging
 Shift + Right Click on a *GameObject* in *Scene View* to "ping" its *Mesh*.
 
+### Extracting Materials & Meshes
+Right click on a *GameObject* or *Prefab* to extract its *Materials* and *Meshes* to the *Project* folder.
+
 # Known Limitations
 - The Overlay doesn't refresh properly when docked in a Toolbar.
 - When working on a Prefab in Stage mode (Isolation), material assignments are set as overrides at Scene level.
 
 # Future Improvements
 - Customization of Key Modifiers (Ctrl, Alt, Shift) in the Preferemces
+
 
 
 
