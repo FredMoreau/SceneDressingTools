@@ -79,6 +79,14 @@ The *Material* is assigned and the override is applied to the *leaf* (most inner
 ##### Auto Apply Overrides
 Automatically apply Overrides to Leaf Prefabs when the assignment is the result of a *replacement*.
 
+#### Reference Pinging
+
+##### Material Pinging
+Ctrl + Right Click on a *GameObject* in *Scene View* to "ping" its *Material*.
+
+##### Mesh Pinging
+Shift + Right Click on a *GameObject* in *Scene View* to "ping" its *Mesh*.
+
 # Known Limitations
 - The Overlay doesn't refresh properly when docked in a Toolbar.
 - When working on a Prefab in Stage mode (Isolation), material assignments are set as overrides at Scene level.
