@@ -11,6 +11,7 @@
 ## Features
 ### Material SceneView Drag and Drop
 In the **Preferences** go to the *Scene Dressing/Materials* and enable *Drag 'n' Drop Behaviour Override*. Then set the different modes.
+In Unity 2021.2 and above, you can also display the Scene Dressing Overlay in Scene View for a direct access.
 
 #### Assignment Mode
 
