@@ -77,7 +77,30 @@ namespace Unity.SceneDressingTools.Editor
         {
             if (!Preferences.EnableDragAndDropOverride)
                 return;
-            
+
+#if !UNITY_2021_2_OR_NEWER
+            Handles.BeginGUI();
+            GUIStyle style = new GUIStyle(EditorStyles.helpBox);
+            style.richText = true;
+            style.stretchWidth = false;
+            style.alignment = TextAnchor.MiddleLeft;
+            style.padding = new RectOffset(24, 0, 0, 0);
+            var h = sceneView.position.height;
+
+            string prompt = "<b>Scene Dressing Override is On</b>.\n" +
+                        "Hold <b>Control</b> to Assign Original to instances.\n" +
+                        "Hold <b>Alt</b> to Replace all with Original.\n" +
+                        "Hold <b>Shift</b> to Copy Properties\n" +
+                        "Hold <b>Alt + Control</b> to Replace with Orignal on all Instances.\n" +
+                        "Read documentation for more shortcuts.";
+
+            var rect = GUILayoutUtility.GetRect(450, 84, style);
+            rect.position = new Vector2(12, h - 120);
+            GUI.Label(rect, prompt, style);
+
+            Handles.EndGUI();
+#endif
+
             var evt = Event.current;
 
             if (evt.type == EventType.MouseDown)
