@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Overlays;
 using UnityEngine.UIElements;
+using System.Threading.Tasks;
 
 namespace Unity.SceneDressingTools.Editor
 {
@@ -16,7 +17,9 @@ namespace Unity.SceneDressingTools.Editor
         //public bool visible => Selection.GetFiltered<Material>(SelectionMode.Assets).Length > 0;
         public bool visible => Preferences.EnableDragAndDropOverride;
 
-        readonly Color bg = new Color(0, 0, 0, 0.4f);
+        //readonly Color bg = new Color(0, 0, 0, 0.4f);
+
+        VisualElement root;
 
         public override void OnCreated()
         {
@@ -36,37 +39,44 @@ namespace Unity.SceneDressingTools.Editor
 
         public override VisualElement CreatePanelContent()
         {
-            var root = new VisualElement()
+            if (root is null)
             {
+                root = new VisualElement()
+                {
                 
-            };
+                };
+                root.style.flexDirection = FlexDirection.Row;
 
-            // TODO : custom background color 
+                // TODO : custom background color 
 
-            //root.style.backgroundColor = Color.clear;
+                //root.style.backgroundColor = Color.clear;
 
-            string prompt = "<b>Scene Dressing Override is On</b>.\n" +
-                        "Hold <b>Control</b> to Assign Original to instances.\n" +
-                        "Hold <b>Alt</b> to Replace all with Original.\n" +
-                        "Hold <b>Shift</b> to Copy Properties\n" +
-                        "Hold <b>Alt + Control</b> to Replace with Orignal on all Instances.\n" +
-                        "Read documentation for more shortcuts.";
+                string prompt = "<b>Scene Dressing Override is On</b>.\n" +
+                            "<b>Hover</b> for more info.";
 
-            var label = new Label(prompt)
-            {
+                string tooltip = "Hold Control to Assign Original to instances.\n" +
+                            "Hold Alt to Replace all with Original.\n" +
+                            "Hold Shift to Copy Properties\n" +
+                            "Hold Alt + Control to Replace with Orignal on all Instances.\n" +
+                            "Hold Control + Shift, then right click on an object to copy its Material to Clipboard.\n" +
+                            "Read documentation for more shortcuts.";
 
-            };
-            root.Add(label);
+                var label = new Label(prompt)
+                {
+                    tooltip = tooltip
+                };
+                root.Add(label);
 
-            //var button = new Button(() =>
-            //{
-            //    OnToggle?.Invoke();
-            //    root.Q<Button>().text = SceneViewToolbar.isDisplayed ? "Close" : "Open";
-            //})
-            //{
-            //    text = SceneViewToolbar.isDisplayed ? "Close" : "Open"
-            //};
-            //root.Add(button);
+                //var button = new Button(() =>
+                //{
+                //    OnToggle?.Invoke();
+                //    root.Q<Button>().text = SceneViewToolbar.isDisplayed ? "Close" : "Open";
+                //})
+                //{
+                //    text = SceneViewToolbar.isDisplayed ? "Close" : "Open"
+                //};
+                //root.Add(button);
+            }
 
             return root;
         }

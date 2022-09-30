@@ -69,7 +69,7 @@ namespace Unity.SceneDressingTools.Editor
             //Debug.Log(root?.name);
             //Debug.Log(root.Q<EditorToolbarToggle>("overrideToggle"));
 
-            Debug.Log(assignmentModeField);
+            //Debug.Log(assignmentModeField);
 
             if (root is null)
             {
@@ -106,6 +106,9 @@ namespace Unity.SceneDressingTools.Editor
 
         public override VisualElement CreatePanelContent()
         {
+            if (root != null)
+                return root;
+
             //if (!collapsed)
             //{
             root = base.CreatePanelContent();
@@ -116,7 +119,7 @@ namespace Unity.SceneDressingTools.Editor
             //}
 
             assignmentModeField = root.Q<EnumField>("assignmentMode");
-            Debug.Log(assignmentModeField);
+            //Debug.Log(assignmentModeField);
 
             return root;
         }

@@ -4,12 +4,17 @@ using UnityEngine;
 using UnityEditor;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
+using System.Reflection;
 
 namespace Unity.SceneDressingTools.Editor
 {
     [InitializeOnLoad]
     public static class SceneViewDragAndDropOverride
     {
+        internal static event Action<Material> OnMaterialClipboardChanged;
+
         internal enum AssignmentMode
         {
             AssignOriginal,
@@ -64,6 +69,12 @@ namespace Unity.SceneDressingTools.Editor
         
         static Mode ctrlAltShiftMode = new Mode("Replace with Duplicate on all Instances", AssignmentMode.AssignDuplicate, GameObjectMode.ReplaceOnAllMeshInstances, PrefabInstanceMode.PopupMenu);
 
+        static Material materialClipboard;
+
+        public static Material MaterialClipboard { get => materialClipboard; }
+
+        static Type projectBrowserType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.ProjectBrowser");
+
         static SceneViewDragAndDropOverride()
         {
 #if UNITY_2019_1_OR_NEWER
@@ -105,21 +116,41 @@ namespace Unity.SceneDressingTools.Editor
 
             if (evt.type == EventType.MouseDown)
             {
-                if (evt.button == 1 && evt.control)
+                if (evt.button == 1 && evt.control && !evt.shift)
                 {
-                    int submeshIndex;
-                    if (HandleUtility.PickGameObject(evt.mousePosition, out submeshIndex).TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
+                    var go = HandleUtility.PickGameObject(evt.mousePosition, out int submeshIndex);
+                    if (go && go.TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
                     {
-                        EditorGUIUtility.PingObject(meshRenderer.sharedMaterials[submeshIndex]);
+                        //EditorGUIUtility.PingObject(meshRenderer.sharedMaterials[submeshIndex]);
+                        PingObjectInProjectWindow(meshRenderer.sharedMaterials[submeshIndex]);
                     }
                     evt.Use();
                 }
-                else if (evt.button == 1 && evt.shift)
+                else if (evt.button == 1 && evt.shift && !evt.control)
                 {
-                    int submeshIndex;
-                    if (HandleUtility.PickGameObject(evt.mousePosition, out submeshIndex).TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
+                    var go = HandleUtility.PickGameObject(evt.mousePosition, out int submeshIndex);
+                    if (go && go.TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
                     {
                         EditorGUIUtility.PingObject(meshRenderer.GetComponent<MeshFilter>()?.sharedMesh);
+                    }
+                    evt.Use();
+                }
+                else if (evt.button == 1 && evt.control && evt.shift)
+                {
+                    var go = HandleUtility.PickGameObject(evt.mousePosition, out int submeshIndex);
+                    if (go && go.TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
+                    {
+                        materialClipboard = meshRenderer.sharedMaterials[submeshIndex];
+                        OnMaterialClipboardChanged?.Invoke(materialClipboard);
+                    }
+                    evt.Use();
+                }
+                else if (evt.button == 2 && evt.control && evt.shift)
+                {
+                    var go = HandleUtility.PickGameObject(evt.mousePosition, out int submeshIndex);
+                    if (materialClipboard && go && go.TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
+                    {
+                        MaterialUtilities.AssignMaterial(meshRenderer, submeshIndex, materialClipboard, Preferences.AutoApplyOverrides);
                     }
                     evt.Use();
                 }
@@ -127,6 +158,7 @@ namespace Unity.SceneDressingTools.Editor
             else if (evt.type == EventType.DragUpdated)
             {
                 // TODO : change pointer
+                // TODO : implement preview
             }
             else if (evt.type == EventType.DragPerform)
             {
@@ -148,8 +180,8 @@ namespace Unity.SceneDressingTools.Editor
                 else
                     currentMode = new Mode("Custom", Preferences.AssignmentMode, Preferences.GameObjectMode, Preferences.PrefabInstanceMode);
 
-                int submeshIndex;
-                if (HandleUtility.PickGameObject(evt.mousePosition, out submeshIndex).TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
+                var go = HandleUtility.PickGameObject(evt.mousePosition, out int submeshIndex);
+                if (go && go.TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
                 {
                     Material targetMaterial = meshRenderer.sharedMaterials[submeshIndex];
                     Material sourceMaterial = DragAndDrop.objectReferences.FirstOrDefault(x => x is Material) as Material;
@@ -315,6 +347,32 @@ namespace Unity.SceneDressingTools.Editor
                     }
                 }
             }
+        }
+
+        static async void PingObjectInProjectWindow(UnityEngine.Object obj)
+        {
+            MethodInfo hasOpenInstancesMethod = typeof(EditorWindow).GetMethod("HasOpenInstances",
+                                BindingFlags.Public | BindingFlags.Static);
+            hasOpenInstancesMethod = hasOpenInstancesMethod.MakeGenericMethod(projectBrowserType);
+
+            //MethodInfo createInstanceMethod = typeof(EditorWindow).GetMethod("CreateWindow",
+            //                    BindingFlags.Public | BindingFlags.Static);
+            //createInstanceMethod = createInstanceMethod.MakeGenericMethod(projectBrowserType);
+
+            if (!(bool)hasOpenInstancesMethod.Invoke(null, null))
+            {
+                //var projectWindow = (EditorWindow)createInstanceMethod.Invoke(null, null);
+                var projectWindow = EditorWindow.GetWindow(projectBrowserType);
+                projectWindow.Show();
+                await Task.Delay(1000);
+            }
+            else
+            {
+                var projectWindow = EditorWindow.GetWindow(projectBrowserType);
+                projectWindow.Show();
+            }
+
+            EditorGUIUtility.PingObject(obj);
         }
     }
 }

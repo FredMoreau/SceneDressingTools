@@ -3,6 +3,12 @@ All notable changes to this package will be documented in this file.
 
 ## [0.1.0-preview.2] - 2022-09-23
 
+### Material Clipboard.
+
+*Hold Control + Shift and Right click on a GameObject in the SceneView to copy its material in the Clipboard.*
+*Then Hold Control + Shift and Middle click on a GameObject in the SceneView to assign the Clipboard Material.*
+*In Unity 2021.2 or newer, the Clipboard Material will show as an Overlay. Click on the thumbnail to edit the Material.*
+
 ### Extract Materials & Meshes from Model/Prefab.
 
 *Right click on a GameObject in the Hierarchy or a Prefab in the Project View and select Scene Dressing/Extract Materials/Meshes.*

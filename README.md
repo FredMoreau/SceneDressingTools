@@ -90,6 +90,14 @@ Shift + Right Click on a *GameObject* in *Scene View* to "ping" its *Mesh*.
 ### Extracting Materials & Meshes
 Right click on a *GameObject* or *Prefab* to extract its *Materials* and *Meshes* to the *Project* folder.
 
+### Material Clipboard.
+
+*Hold Control + Shift and Right click on a GameObject in the SceneView to copy its material in the Clipboard.*
+*Then Hold Control + Shift and Middle click on a GameObject in the SceneView to assign the Clipboard Material.*
+*In Unity 2021.2 or newer, the Clipboard Material will show as an Overlay. Click on the thumbnail to edit the Material.*
+
+![preview](/Documentation~/images/material_clipboard_demo.gif)
+
 # Known Limitations
 - The Overlay doesn't refresh properly when docked in a Toolbar.
 - When working on a Prefab in Stage mode (Isolation), material assignments are set as overrides at Scene level.
