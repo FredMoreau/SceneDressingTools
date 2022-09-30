@@ -24,7 +24,7 @@ namespace Unity.SceneDressingTools.Editor
         internal static void AssignMaterial(MeshRenderer meshRenderer, int index, Material material, bool applyOverridesToMostInnerPrefab = false)
         {
             var undoLvl = Undo.GetCurrentGroup();
-            Undo.RecordObject(meshRenderer, "Replace Material");
+            Undo.RecordObject(meshRenderer, "Assign Material");
 
             if (meshRenderer.sharedMaterials.Length == 1)
             {
@@ -39,7 +39,7 @@ namespace Unity.SceneDressingTools.Editor
 
             RecordIfPrefabInstanceAndApplyOverridesIfCanBeAppliedTo(meshRenderer, applyOverridesToMostInnerPrefab);
 
-            Undo.SetCurrentGroupName("Replace Material");
+            Undo.SetCurrentGroupName("Assign Material");
             Undo.CollapseUndoOperations(undoLvl);
         }
 
@@ -63,7 +63,7 @@ namespace Unity.SceneDressingTools.Editor
 
                 RecordIfPrefabInstanceAndApplyOverridesIfCanBeAppliedTo(meshRenderer, applyOverridesToMostInnerPrefab);
             }
-            Undo.SetCurrentGroupName("Replace Material");
+            Undo.SetCurrentGroupName("Assign Material to Renderers");
             Undo.CollapseUndoOperations(undoLvl);
         }
 
