@@ -8,10 +8,30 @@
 - git@github.com:FredMoreau/SceneDressingTools.git
 - You can also download the repo as a Zip file, unzip it somewhere like C://Unity_Custom_Packages/, then from the Package Manager select Add package from disk, and browse for the package.json file.
 
+![preview](/Documentation~/images/package_manager.png)
+
 ## Features
 ### Material SceneView Drag and Drop
 In the **Preferences** go to the *Scene Dressing/Materials* and enable *Drag 'n' Drop Behaviour Override*. Then set the different modes.
 In Unity 2021.2 and above, you can also display the Scene Dressing Overlay in Scene View for a direct access.
+
+![preview](/Documentation~/images/preferences.png)
+
+You'll see a prompt in the Scene View to remind you that overrides are On.
+
+![preview](/Documentation~/images/unity_2021_1_prompt.png)
+
+If you're using Unity 2021.2 or a newer version, the prompt will show as an Overlay.
+
+![preview](/Documentation~/images/overlay_prompt.png)
+
+You can also display the Scene Dressing Overlay from the Scene View context menu.
+
+![preview](/Documentation~/images/overlay_menu.png)
+
+This will provide a shortcut to most settings.
+
+![preview](/Documentation~/images/overlay_toolbar.png)
 
 #### Assignment Mode
 
@@ -79,12 +99,12 @@ The *Material* is assigned and the override is applied to the *leaf* (most inner
 ##### Auto Apply Overrides
 Automatically apply Overrides to Leaf Prefabs when the assignment is the result of a *replacement*.
 
-#### Reference Pinging
+### Reference Pinging
 
-##### Material Pinging
+#### Material Pinging
 Ctrl + Right Click on a *GameObject* in *Scene View* to "ping" its *Material*.
 
-##### Mesh Pinging
+#### Mesh Pinging
 Shift + Right Click on a *GameObject* in *Scene View* to "ping" its *Mesh*.
 
 ### Extracting Materials & Meshes
