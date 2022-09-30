@@ -37,6 +37,39 @@ namespace Unity.SceneDressingTools.Editor
                 meshRenderer.sharedMaterials = materials;
             }
 
+            RecordIfPrefabInstanceAndApplyOverridesIfCanBeAppliedTo(meshRenderer, applyOverridesToMostInnerPrefab);
+
+            Undo.SetCurrentGroupName("Replace Material");
+            Undo.CollapseUndoOperations(undoLvl);
+        }
+
+        internal static void AssignMaterialToAllRenderersAllIDs(MeshRenderer[] meshRenderers, Material material, bool applyOverridesToMostInnerPrefab = false)
+        {
+            var undoLvl = Undo.GetCurrentGroup();
+            Undo.RecordObjects(meshRenderers, "Assign Material to Renderers");
+            foreach (MeshRenderer meshRenderer in meshRenderers)
+            {
+                if (meshRenderer.sharedMaterials.Length == 0)
+                {
+                    meshRenderer.sharedMaterial = material;
+                }
+                else
+                {
+                    var materials = meshRenderer.sharedMaterials;
+                    for (int m = 0; m < materials.Length; m++)
+                        materials[m] = material;
+                    meshRenderer.sharedMaterials = materials;
+                }
+
+                RecordIfPrefabInstanceAndApplyOverridesIfCanBeAppliedTo(meshRenderer, applyOverridesToMostInnerPrefab);
+            }
+            Undo.SetCurrentGroupName("Replace Material");
+            Undo.CollapseUndoOperations(undoLvl);
+        }
+
+        // TODO : optimize so that it doesn't take a crazy amount of time to loop over all instances
+        static void RecordIfPrefabInstanceAndApplyOverridesIfCanBeAppliedTo (MeshRenderer meshRenderer, bool applyOverridesToMostInnerPrefab = false)
+        {
             if (PrefabUtility.IsPartOfPrefabInstance(meshRenderer))
             {
                 PrefabUtility.RecordPrefabInstancePropertyModifications(meshRenderer);
@@ -48,9 +81,6 @@ namespace Unity.SceneDressingTools.Editor
                 var leafPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(originalSource);
                 PrefabUtilities.ApplyMaterialsOverrides(meshRenderer, leafPath);
             }
-
-            Undo.SetCurrentGroupName("Replace Material");
-            Undo.CollapseUndoOperations(undoLvl);
         }
 
         internal static void ReplaceMaterial(MeshRenderer[] meshRenderers, Material target, Material replacement)
@@ -66,7 +96,6 @@ namespace Unity.SceneDressingTools.Editor
             }
         }
 
-        // TODO : this should be using GetSameMaterialRenderers() ??
         internal static void ReplaceMaterialInSelection(Material targetMaterial, Material sourceMaterial)
         {
             if (targetMaterial.GetSameMaterialRenderersWithinSelection(out MeshRenderer[] meshRenderers))

@@ -5,8 +5,9 @@ using UnityEditor;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
-using static System.Collections.Specialized.BitVector32;
 using System.Reflection;
+
+// TODO : refactor using https://docs.unity3d.com/ScriptReference/DragAndDrop.SceneDropHandler.html
 
 namespace Unity.SceneDressingTools.Editor
 {

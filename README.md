@@ -118,12 +118,18 @@ Right click on a *GameObject* or *Prefab* to extract its *Materials* and *Meshes
 
 ![preview](/Documentation~/images/material_clipboard_demo.gif)
 
+### Assign Material to Hierarchy (Hierarchy View).
+
+*When Drag And Drop Override is on, dropping a Material on a GameObject in the Hierarchy will Assign the Material to all Material IDs of all MeshRenderers in children.*
+
 # Known Limitations
 - The Overlay doesn't refresh properly when docked in a Toolbar.
 - When working on a Prefab in Stage mode (Isolation), material assignments are set as overrides at Scene level.
+- AutoApplyOverrides can take a lot of time if many prefabs are involved.
 
 # Future Improvements
 - Customization of Key Modifiers (Ctrl, Alt, Shift) in the Preferemces
 - (Re)building *Prefabs* from Instances
 - Enabling preview when hovering a model with a *Material*.
+
 

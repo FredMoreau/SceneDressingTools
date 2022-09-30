@@ -3,6 +3,10 @@ All notable changes to this package will be documented in this file.
 
 ## [0.1.0-preview.2] - 2022-09-23
 
+### Assign Material to Hierarchy (Hierarchy View).
+
+*When Drag And Drop Override is on, dropping a Material on a GameObject in the Hierarchy will Assign the Material to all Material IDs of all MeshRenderers in children.*
+
 ### Material Clipboard.
 
 *Hold Control + Shift and Right click on a GameObject in the SceneView to copy its material in the Clipboard.*
