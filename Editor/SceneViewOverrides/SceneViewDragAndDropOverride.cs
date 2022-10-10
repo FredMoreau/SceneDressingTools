@@ -7,13 +7,53 @@ using System;
 using System.Threading.Tasks;
 using System.Reflection;
 
-// TODO : refactor using https://docs.unity3d.com/ScriptReference/DragAndDrop.SceneDropHandler.html
-
 namespace Unity.SceneDressingTools.Editor
 {
-    [InitializeOnLoad]
     public static class SceneViewDragAndDropOverride
     {
+        internal static bool isOn;
+        internal static bool IsOn
+        {
+            get => isOn;
+            set
+            {
+                if (value == isOn)
+                    return;
+                isOn = value;
+                if (isOn)
+#if UNITY_2019_1_OR_NEWER
+                    SceneView.duringSceneGui += OnSceneGUI;
+#else
+                    SceneView.onSceneGUIDelegate += OnSceneGUI;
+#endif
+                else
+#if UNITY_2019_1_OR_NEWER
+                    SceneView.duringSceneGui -= OnSceneGUI;
+#else
+                    SceneView.onSceneGUIDelegate -= OnSceneGUI;
+#endif
+            }
+        }
+
+        [InitializeOnLoadMethod]
+        static void Init()
+        {
+            isOn = Preferences.EnableDragAndDropOverride;
+            if (isOn)
+#if UNITY_2019_1_OR_NEWER
+                SceneView.duringSceneGui += OnSceneGUI;
+#else
+                SceneView.onSceneGUIDelegate += OnSceneGUI;
+#endif
+
+            Preferences.OnSettingsChanged += Preferences_OnSettingsChanged;
+        }
+
+        private static void Preferences_OnSettingsChanged()
+        {
+            IsOn = Preferences.EnableDragAndDropOverride;
+        }
+
         internal static event Action<Material> OnMaterialClipboardChanged;
 
         internal enum AssignmentMode
@@ -43,7 +83,6 @@ namespace Unity.SceneDressingTools.Editor
             AssignToMostInnerPrefab
         }
 
-        // TODO : implement key modifiers modes
         struct Mode
         {
             public string name;
@@ -76,20 +115,8 @@ namespace Unity.SceneDressingTools.Editor
 
         static Type projectBrowserType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.ProjectBrowser");
 
-        static SceneViewDragAndDropOverride()
-        {
-#if UNITY_2019_1_OR_NEWER
-            SceneView.duringSceneGui += OnSceneGUI;
-#else
-            SceneView.onSceneGUIDelegate += OnSceneGUI;
-#endif
-        }
-
         static void OnSceneGUI(SceneView sceneView)
         {
-            if (!Preferences.EnableDragAndDropOverride)
-                return;
-
 #if !UNITY_2021_2_OR_NEWER
             Handles.BeginGUI();
             GUIStyle style = new GUIStyle(EditorStyles.helpBox);
@@ -205,7 +232,7 @@ namespace Unity.SceneDressingTools.Editor
                                 break;
 #if UNITY_2022_1_OR_NEWER
                             case AssignmentMode.AssignVariant:
-                                sourceMaterial = sourceMaterial..CreateMaterialVariant();
+                                sourceMaterial = sourceMaterial.CreateMaterialVariant();
                                 break;
 #endif
                             default:

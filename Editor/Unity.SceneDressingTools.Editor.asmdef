@@ -1,6 +1,6 @@
 {
     "name": "Unity.SceneDressingTools.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "Unity.SceneDressingTools.Editor",
     "references": [],
     "includePlatforms": [
         "Editor"

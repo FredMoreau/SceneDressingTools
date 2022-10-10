@@ -11,7 +11,7 @@ namespace Unity.SceneDressingTools.Editor
         internal static bool isOn;
         internal static bool IsOn
         {
-            get => Preferences.EnableDragAndDropOverride;
+            get => isOn;
             set
             {
                 if (value == isOn)
