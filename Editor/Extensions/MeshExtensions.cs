@@ -11,7 +11,7 @@ namespace Unity.SceneDressingTools.Editor
     {
         internal static bool GetInstancedRenderers(this Mesh mesh, out MeshRenderer[] meshRenderers)
         {
-            meshRenderers = (from item in Object.FindObjectsOfType<MeshFilter>()
+            meshRenderers = (from item in Object.FindObjectsOfType<MeshFilter>(true)
                              where item.sharedMesh == mesh
                              select item.GetComponent<MeshRenderer>()).ToArray();
 
