@@ -1,0 +1,27 @@
+{
+    "name": "Unity.SceneDressingTools.Pixyz",
+    "rootNamespace": "Unity.SceneDressingTools.Pixyz",
+    "references": [
+        "Unity.Pixyz.Plugin4Unity",
+        "Unity.Pixyz.Plugin4Unity.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "PIXYZ_PLUGIN_1_1_OR_NEWER"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.pixyz.plugin4unity",
+            "expression": "1.1.0-pre.1",
+            "define": "PIXYZ_PLUGIN_1_1_OR_NEWER"
+        }
+    ],
+    "noEngineReferences": false
+}
