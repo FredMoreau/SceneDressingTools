@@ -59,8 +59,10 @@ namespace Unity.SceneDressingTools.Editor
             if (name == string.Empty)
                 name = original.name;
 
-            Material material = new Material(original);
+            name = string.Join("_", name.Split(Path.GetInvalidFileNameChars()));
             string destinationPath = Path.Combine(path, name);
+
+            Material material = new Material(original);
             destinationPath = AssetDatabase.GenerateUniqueAssetPath(destinationPath + ".mat");
             AssetDatabase.CreateAsset(material, destinationPath);
 

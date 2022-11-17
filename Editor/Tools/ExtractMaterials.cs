@@ -15,7 +15,7 @@ namespace Unity.SceneDressingTools.Editor
 
             Dictionary<Material, Material> materials = new Dictionary<Material, Material>();
 
-            var renderers = Selection.activeGameObject.GetComponentsInChildren<MeshRenderer>();
+            var renderers = Selection.activeGameObject.GetComponentsInChildren<MeshRenderer>(true);
 
             var n = Selection.activeGameObject.transform.root.name;
             var path = Preferences.AssetExtractionPath.Replace("[modelName]", n);

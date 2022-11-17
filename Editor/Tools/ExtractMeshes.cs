@@ -13,7 +13,7 @@ namespace Unity.SceneDressingTools.Editor
         {
             Dictionary<Mesh, Mesh> meshes = new Dictionary<Mesh, Mesh>();
 
-            var meshFilters = Selection.activeGameObject.GetComponentsInChildren<MeshFilter>();
+            var meshFilters = Selection.activeGameObject.GetComponentsInChildren<MeshFilter>(true);
 
             var n = Selection.activeGameObject.transform.root.name;
             var path = Preferences.AssetExtractionPath.Replace("[modelName]", n);

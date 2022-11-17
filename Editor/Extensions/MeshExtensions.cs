@@ -44,9 +44,11 @@ namespace Unity.SceneDressingTools.Editor
                 Directory.CreateDirectory(path);
             if (name == string.Empty)
                 name = original.name;
+            
+            name = string.Join("_", name.Split(Path.GetInvalidFileNameChars()));
+            string destinationPath = Path.Combine(path, name);
 
             Mesh newMesh = Object.Instantiate(original);
-            string destinationPath = Path.Combine(path, name);
             destinationPath = AssetDatabase.GenerateUniqueAssetPath(destinationPath + ".asset");
             AssetDatabase.CreateAsset(newMesh, destinationPath);
 
