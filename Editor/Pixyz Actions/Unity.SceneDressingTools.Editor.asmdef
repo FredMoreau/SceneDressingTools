@@ -14,13 +14,13 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [
-        "PIXYZ_PLUGIN_1_1_OR_NEWER"
+        "PIXYZ_PLUGIN_1_0_1_OR_NEWER"
     ],
     "versionDefines": [
         {
             "name": "com.unity.pixyz.plugin4unity",
-            "expression": "1.1.0-pre.1",
-            "define": "PIXYZ_PLUGIN_1_1_OR_NEWER"
+            "expression": "1.0.1",
+            "define": "PIXYZ_PLUGIN_1_0_1_OR_NEWER"
         }
     ],
     "noEngineReferences": false
